@@ -1,0 +1,9 @@
+development:
+  clients:
+    default:
+      database: ENV['DB_NAME']
+      hosts:
+        - rails-cluster.tnkhd.mongodb.net
+    options:
+      user: ENV['DB_USER']
+      password: ENV['DB_PASSWORD']
