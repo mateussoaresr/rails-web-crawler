@@ -1,9 +1,8 @@
 development:
   clients:
     default:
-      database: ENV['DB_NAME']
+      database: web_crawler_development
       hosts:
-        - rails-cluster.tnkhd.mongodb.net
-    options:
-      user: ENV['DB_USER']
-      password: ENV['DB_PASSWORD']
+        - localhost:27017
+      options:
+        server_selection_timeout: 1
