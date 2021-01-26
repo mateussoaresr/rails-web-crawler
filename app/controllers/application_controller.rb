@@ -10,10 +10,10 @@ class ApplicationController < ActionController::API
     begin
       @decoded = JsonWebToken.decode(header)
       @current_user = User.find(@decoded[:user_id])
-    rescue Mongo::Error => e
-      render json: { errors: e.message }, status: :unauthorized
-    rescue JWT::DecodeError => e
-      render json: { errors: e.message }, status: :unauthorized
+    rescue Mongo::Error => error
+      render json: { errors: error.message }, status: :unauthorized
+    rescue JWT::DecodeError => error
+      render json: { errors: error.message }, status: :unauthorized
     end
   end
 end
