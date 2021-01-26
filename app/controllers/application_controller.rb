@@ -1,19 +1,19 @@
 class ApplicationController < ActionController::API
   def not_found
-    render json: { error: 'not_found' }
+    render json: {error: "not_found"}
   end
 
   def authorize_request
-    header = request.headers['Authorization']
-    header = header.split(' ').last if header
+    header = request.headers["Authorization"]
+    header = header.split(" ").last if header
 
     begin
       @decoded = JsonWebToken.decode(header)
       @current_user = User.find(@decoded[:user_id])
     rescue Mongo::Error => error
-      render json: { errors: error.message }, status: :unauthorized
+      render json: {errors: error.message}, status: :unauthorized
     rescue JWT::DecodeError => error
-      render json: { errors: error.message }, status: :unauthorized
+      render json: {errors: error.message}, status: :unauthorized
     end
   end
 end

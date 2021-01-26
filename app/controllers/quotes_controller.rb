@@ -19,16 +19,16 @@ class QuotesController < ApplicationController
           if stored_tag.present?
             tags << stored_tag
           else
-            tags_attributes << { name: tag }
+            tags_attributes << {name: tag}
           end
         end
 
-        params = { title: quote[:quote], author: quote[:author], about: quote[:author_about],
-          tags_attributes:  tags_attributes }
-        
+        params = {title: quote[:quote], author: quote[:author], about: quote[:author_about],
+                  tags_attributes: tags_attributes}
+
         create(params, tags)
       end
-      show()
+      show
     end
     @quotes
   end

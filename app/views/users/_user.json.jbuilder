@@ -1,1 +1,1 @@
-json.(user, :id, :name, :username, :email)
+json.call(user, :id, :name, :username, :email)

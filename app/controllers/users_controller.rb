@@ -17,16 +17,16 @@ class UsersController < ApplicationController
     if @user.save
       render json: {notice: "Usuário criado com sucesso."}, status: :created
     else
-      render json: { errors: @user.errors.full_messages },
-              status: :unprocessable_entity
+      render json: {errors: @user.errors.full_messages},
+             status: :unprocessable_entity
     end
   end
 
   # PUT /users/{username}
   def update
     unless @user.update(user_params)
-      render json: { errors: @user.errors.full_messages },
-              status: :unprocessable_entity
+      render json: {errors: @user.errors.full_messages},
+             status: :unprocessable_entity
     end
   end
 
@@ -39,8 +39,8 @@ class UsersController < ApplicationController
 
   def find_user
     @user = User.find_by_username!(params[:_username])
-    rescue Mongo::Error
-      render json: { errors: 'User not found' }, status: :not_found
+  rescue Mongo::Error
+    render json: {errors: "User not found"}, status: :not_found
   end
 
   def user_params
