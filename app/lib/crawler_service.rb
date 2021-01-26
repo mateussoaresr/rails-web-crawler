@@ -10,7 +10,7 @@ class CrawlerService
   end
 
   def scrape_page(url)
-    Nokogiri::HTML(Uri.parse(url).open)
+    Nokogiri::HTML(URI.open(url))
   end
 
   def perform
