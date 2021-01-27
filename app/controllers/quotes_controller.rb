@@ -10,34 +10,47 @@ class QuotesController < ApplicationController
       crawler = CrawlerService.new(params[:id])
       @quotes = crawler.perform
 
-      @quotes.each do |quote|
-        tags = []
-        tags_attributes = []
+      if @quotes.present?
+        @quotes.each do |quote|
+          author = {}
+          author_attributes = {}
+          tags = []
+          tags_attributes = []
 
-        quote[:tags].each do |tag|
-          stored_tag = Tag.find_by(name: tag)
-          if stored_tag.present?
-            tags << stored_tag
+          stored_author = Author.find_by(name: quote[:author])
+
+          if stored_author.present?
+            author = stored_author
           else
-            tags_attributes << {name: tag}
+            author_attributes = {name: quote[:author], author_about: quote[:author_about]}
           end
+
+          quote[:tags].each do |tag|
+            stored_tag = Tag.find_by(name: tag)
+            if stored_tag.present?
+              tags << stored_tag
+            else
+              tags_attributes << {name: tag}
+            end
+          end
+
+          params = {title: quote[:quote], tags_attributes: tags_attributes,
+                    author_attributes: author_attributes}
+
+          create(params, tags, author)
         end
-
-        params = {title: quote[:quote], author: quote[:author], about: quote[:author_about],
-                  tags_attributes: tags_attributes}
-
-        create(params, tags)
+        show
+      else
+        render json: {error: "Tag não encontrada"}
       end
-      show
     end
     @quotes
   end
 
-  private
-
-  def create(params, tags)
+  def create(params, tags, author)
     @quote = Quote.new(params)
     @quote.tags << tags
-    @quote.save
+    @quote.author = author if author.present?
+    @quote.save!
   end
 end
