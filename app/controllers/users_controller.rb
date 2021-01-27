@@ -2,11 +2,6 @@ class UsersController < ApplicationController
   before_action :authorize_request, except: :create
   before_action :find_user, except: %i[create index]
 
-  # GET /users
-  def index
-    @users = User.all
-  end
-
   # GET /users/{username}
   def show
   end
@@ -28,11 +23,6 @@ class UsersController < ApplicationController
       render json: {errors: @user.errors.full_messages},
              status: :unprocessable_entity
     end
-  end
-
-  # DELETE /users/{username}
-  def destroy
-    @user.destroy
   end
 
   private
