@@ -1,2 +1,2 @@
 ignore:
-  - "app/lib/**"
+  - "app/lib/crawler_service.rb"
